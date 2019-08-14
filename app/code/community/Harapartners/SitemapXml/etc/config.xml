@@ -73,18 +73,4 @@
 			</sitemapxml_adminhtml>
 		</routers>
 	</admin>
-	<!--
-	<crontab>
-		<jobs>
-			<edi_sync>
-				<schedule>
-					<cron_expr>0,30 * * * *</cron_expr>
-				</schedule>
-				<run>
-					<model>edi/observer::createSendRecieveSyncEdi</model>
-				</run>
-			</edi_sync>
-		</jobs>
-	</crontab>
-	-->
 </config>

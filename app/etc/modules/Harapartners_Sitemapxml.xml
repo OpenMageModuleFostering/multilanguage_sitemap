@@ -3,7 +3,7 @@
     <modules>
 		<Harapartners_SitemapXml>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
         </Harapartners_SitemapXml>
     </modules>
 </config>

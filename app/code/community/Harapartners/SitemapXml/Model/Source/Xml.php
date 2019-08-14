@@ -78,7 +78,13 @@ class Harapartners_SitemapXml_Model_Source_Xml
         //$string = "$conditionalTab <loc>{$baseUrl}</loc>" . $conditionalLineEnding;
         $suffixPaths = $this->_getSuffixPathsById($itemType, $item->getId());
         foreach ($links as $link) {
-            $suffixpath = isset($suffixPaths[$link['store_id']]) ? $suffixPaths[$link['store_id']] : $item->getUrl();
+            if ($link['lang_code'] != 'x-default') {
+                if (! $this->_isPathEnabled($item->getId(), $link['store_id'], $itemType)) {
+                    continue;
+                }
+            }
+            
+            $suffixpath = ! empty($suffixPaths[$link['store_id']]) ? $suffixPaths[$link['store_id']] : $item->getUrl();
             $readyLink = $link['href'] . $suffixpath;
             if (! $this->_isLinkValid($readyLink)) {
                 continue;
@@ -115,11 +121,93 @@ class Harapartners_SitemapXml_Model_Source_Xml
         return $paths;
     }
 
+    protected function _isPathEnabled($id, $storeId, $type)
+    {
+        //return true;
+        if ($type == 'category') {
+            $attributeType = 'catalog/category';
+            $attributeCode = 'is_active';
+            $attributeValues = array(
+                1 // enabled
+            );
+            
+            if (! $this->_isCategoryInStoreView($id, $storeId)) {
+                // Special Check for Category
+                return false;
+            }
+        } elseif ($type == 'product') {
+            $attributeType = 'catalog/product';
+            $attributeCode = 'status';
+            $attributeValues = array(
+                1 // enabled
+            );
+            
+            if (! $this->_isProductInStoreView($id, $storeId)) {
+                // Special Check for Category
+                return false;
+            }
+        }
+        
+        /* $collection Mage_Eav_Model_Entity_Collection */
+        $collection = Mage::getModel($attributeType)->getCollection();
+        $collection->addFieldToFilter('entity_id', $id);
+        $collection->setStore($storeId);
+        $collection->addFieldToFilter($attributeCode, array(
+            in => ($attributeValues)
+        ));
+        
+        $firstValue = $collection->getFirstItem();
+        if ($firstValue->getId()) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    // == Special Validation == //
     protected function _addCollectionFilterToCollection($collection, $id)
     {
         $collection->getSelect()->where('id_path LIKE ?', "category/{$id}");
         return $this;
     }
+
+    protected function _isCategoryInStoreView($id, $storeId)
+    {
+        $catsToStore = $this->_getCatsToStore();
+        $storeIds = $catsToStore[$id];
+        return ! empty($storeIds[$storeId]);
+    }
+
+    protected function _getCatsToStore()
+    {
+        return Mage::helper('sitemapxml/store_catalog')->getCategoriesToStore();
+    }
+
+    protected function _isProductInStoreView($id, $storeId)
+    {
+        $productsToStore = $this->_getProductsToStore();
+        $storeIds = $productsToStore[$id];
+        return ! empty($storeIds[$storeId]);
+    }
+
+    protected function _getProductsToStore()
+    {
+        return Mage::helper('sitemapxml/store_catalog')->getProductsToStore();
+    }
+
+    // == END Special Validation == //
+    //    protected function _joinEnabledFilter($collection, $type){
+    //        switch($type){
+    //            case 'product':
+    //                $collection->getSelect()->join(array('p_status'=>'catalog_product_entity_int'),'p_status.entity_id=core_url.product_id AND p_status.store_id = core_url.store_id');
+    //                $collection->addFieldToFilter('p_status.value',2);
+    //                break;
+    //            case 'category':
+    //                break;
+    //            default:
+    //        }
+    //    }
+    
 
     protected function _isLinkValid($link)
     {

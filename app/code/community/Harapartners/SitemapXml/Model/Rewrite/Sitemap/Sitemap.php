@@ -86,6 +86,7 @@ class Harapartners_Sitemapxml_Model_Rewrite_Sitemap_Sitemap extends Mage_Sitemap
         $changefreq = (string) Mage::getStoreConfig('sitemap/category/changefreq', $storeId);
         $priority = (string) Mage::getStoreConfig('sitemap/category/priority', $storeId);
         $collection = Mage::getResourceModel('sitemap/catalog_category')->getCollection($storeId);
+        $collection = $this->_joinByOtherStoreIds($collection, $this->_getOtherStoreIds($storeId),'category');
         foreach ($collection as $item) {
             $xml = sprintf('<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%.1f</priority></url>', htmlspecialchars($baseUrl . $item->getUrl()), $date, $changefreq, $priority);
             $newXml = $this->_insertLanguageXml($baseUrl, $item, 'category', $xml);
@@ -100,7 +101,7 @@ class Harapartners_Sitemapxml_Model_Rewrite_Sitemap_Sitemap extends Mage_Sitemap
         $changefreq = (string) Mage::getStoreConfig('sitemap/product/changefreq', $storeId);
         $priority = (string) Mage::getStoreConfig('sitemap/product/priority', $storeId);
         $collection = Mage::getResourceModel('sitemap/catalog_product')->getCollection($storeId);
-        $collection = $this->_joinByOtherStoreIds($collection, $this->_getOtherStoreIds($storeId));
+        $collection = $this->_joinByOtherStoreIds($collection, $this->_getOtherStoreIds($storeId),'product');
         foreach ($collection as $item) {
             $xml = sprintf('<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%.1f</priority></url>', htmlspecialchars($baseUrl . $item->getUrl()), $date, $changefreq, $priority);
             $newXml = $this->_insertLanguageXml($baseUrl, $item, 'product', $xml);
@@ -197,20 +198,20 @@ class Harapartners_Sitemapxml_Model_Rewrite_Sitemap_Sitemap extends Mage_Sitemap
         return $otherStores;
     }
 
-    protected function _joinByOtherStoreIds($currentCollection, $newStoreIds)
+    protected function _joinByOtherStoreIds($currentCollection, $newStoreIds, $type)
     {
         if (empty($newStoreIds)) {
             return $currentCollection;
         }
         
-        foreach ($currentCollection as $product) {
-            $id = $product->getId();
+        foreach ($currentCollection as $item) {
+            $id = $item->getId();
             $ids[$id] = true;
         }
         
 
         foreach ($newStoreIds as $storeId) {
-            $tempCollection = Mage::getResourceModel('sitemap/catalog_product')->getCollection($storeId);
+            $tempCollection = Mage::getResourceModel('sitemap/catalog_'.$type)->getCollection($storeId);
             
             foreach ($tempCollection as $product) {
                 $id = $product->getId();
