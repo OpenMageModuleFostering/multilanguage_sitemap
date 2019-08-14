@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End User Software Agreement (EULA).
+ * It is also available through the world-wide-web at this URL:
+ * http://www.harapartners.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to eula@harapartners.com so we can send you a copy immediately.
+ *
+ -->
+<config>
+	<modules>
+		<Harapartners_SitemapXml>
+			<version>1.0.0</version>
+		</Harapartners_SitemapXml>
+	</modules>
+	<global>
+		<blocks>
+			<sitemapxml>
+				<class>Harapartners_SitemapXml_Block</class>
+			</sitemapxml>
+		</blocks>
+		<models>
+			<sitemapxml>
+				<class>Harapartners_SitemapXml_Model</class>
+				<resourceModel>sitemapxml_resource</resourceModel>
+			</sitemapxml>
+			<sitemap>
+                <rewrite>
+                    <sitemap>Harapartners_SitemapXml_Model_Rewrite_Sitemap_Sitemap</sitemap>
+                </rewrite>
+            </sitemap>
+			<sitemapxml_resource>
+				<class>Harapartners_SitemapXml_Model_Resource</class>
+				<entities>
+					<sitemap_language>
+						<table>harapartners_sitemap_language</table>
+					</sitemap_language>
+				</entities>
+			</sitemapxml_resource>
+		</models>
+		<resources>
+			<sitemapxml_setup>
+				<setup>
+					<module>Harapartners_SitemapXml</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</sitemapxml_setup>
+		</resources>
+		<helpers>
+			<sitemapxml>
+				<class>Harapartners_SitemapXml_Helper</class>
+			</sitemapxml>
+			<adminhtml>
+                <rewrite>
+                    <catalog>Harapartners_SitemapXml_Helper_Rewrite_Adminhtml_Catalog</catalog>
+                </rewrite>
+            </adminhtml>
+		</helpers>
+	</global>
+	<admin>
+		<routers>
+			<sitemapxml_adminhtml>
+				<use>admin</use>
+				<args>
+					<module>Harapartners_SitemapXml_Adminhtml</module>
+					<frontName>sitemapxml_adminhtml</frontName>
+				</args>
+			</sitemapxml_adminhtml>
+		</routers>
+	</admin>
+	<!--
+	<crontab>
+		<jobs>
+			<edi_sync>
+				<schedule>
+					<cron_expr>0,30 * * * *</cron_expr>
+				</schedule>
+				<run>
+					<model>edi/observer::createSendRecieveSyncEdi</model>
+				</run>
+			</edi_sync>
+		</jobs>
+	</crontab>
+	-->
+</config>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End User Software Agreement (EULA).
+ * It is also available through the world-wide-web at this URL:
+ * http://www.harapartners.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to eula@harapartners.com so we can send you a copy immediately.
+ *
+ * @author      Steven Hoffman <s.hoffman@harapartners.com>
+ * @copyright   Copyright (c) 2013 Harapartners Inc.
+ * 
+ -->
+<!-- app/code/local/Harapartners/Edi/etc/system.xml -->
+
+<config>
+	<sections>
+		<sitemap>
+			<groups>
+				<language>
+					<label>Langauge Settings</label>
+					<sort_order>40</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>0</show_in_store>
+					<fields>
+						<is_enabled translate="label">
+							<label>Enable this Addon</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</is_enabled>
+						<x_default_url translate="label">
+							<label>X-Default Base Url</label>
+							<comment>Leave Blank to use Site Default </comment>
+							<frontend_type>text</frontend_type>
+							<validate>validate-url</validate>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</x_default_url>
+						<validate_url translate="label">
+							<label>Ping URL to Validate Link</label>
+							<comment>(200 is a valid responce code)</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>15</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+						</validate_url>
+					</fields>
+				</language>
+			</groups>
+		</sitemap>
+	</sections>
+</config>

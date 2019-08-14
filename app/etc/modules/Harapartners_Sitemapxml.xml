@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+		<Harapartners_SitemapXml>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Harapartners_SitemapXml>
+    </modules>
+</config>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End User Software Agreement (EULA).
+ * It is also available through the world-wide-web at this URL:
+ * http://www.harapartners.com/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to eula@harapartners.com so we can send you a copy immediately.
+ *
+ * @author      Steven Hoffman <s.hoffman@harapartners.com>
+ * @copyright   Copyright (c) 2013 Harapartners Inc.
+ * 
+ -->
+<!-- app/code/local/Harapartners/Edi/etc/adminhtml.xml -->
+
+<config>
+	<menu>
+		<catalog>
+			<children>
+				<sitemap_language translate="title" module="sitemapxml">
+					<title>Google Sitemap Store - Languages</title>
+					<sort_order>200</sort_order>
+					<action>sitemapxml_adminhtml/language</action>
+				</sitemap_language>
+			</children>
+		</catalog>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<catalog>
+						<children>
+							<sitemap_language translate="title" module="sitemapxml">
+								<title>Language Map</title>
+							</sitemap_language>
+						</children>
+					</catalog>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>
