@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/MultiLanguage_Sitemap",
+    "name": "OpenMageModuleFostering\/MultiLanguage_Sitemap",
     "type": "magento-module",
     "license": "Elie-and-Mai-End-User-License-Agreement",
     "homepage": "",
     "description": "The Multi-Language Sitemap Optimization Magento module automatically generates a multi-language sitemap supported by Google.",
     "authors": [
-    {
-        "name": "Elie Orgel",
-        "email": "magento@elieandmai.com"
-    }
-],
+        {
+            "name": "Elie Orgel",
+            "email": "magento@elieandmai.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
