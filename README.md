@@ -1,3 +1,5 @@
+
+
 ## Original Package Description
 
 The Multi-Language Sitemap Optimization Magento module automatically generates a multi-language sitemap supported by Google.
